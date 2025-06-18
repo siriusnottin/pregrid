@@ -6,27 +6,27 @@ import "./globals.css";
 const abhayaLibre = localFont({
   src: [
     {
-      path: "../assets/fonts/Abhaya_Libre/AbhayaLibre-Regular.ttf",
+      path: "../../public/fonts/Abhaya_Libre/AbhayaLibre-Regular.ttf",
       weight: "400",
       style: "normal",
     },
     {
-      path: "../assets/fonts/Abhaya_Libre/AbhayaLibre-Medium.ttf",
+      path: "../../public/fonts/Abhaya_Libre/AbhayaLibre-Medium.ttf",
       weight: "500",
       style: "normal",
     },
     {
-      path: "../assets/fonts/Abhaya_Libre/AbhayaLibre-SemiBold.ttf",
+      path: "../../public/fonts/Abhaya_Libre/AbhayaLibre-SemiBold.ttf",
       weight: "600",
       style: "normal",
     },
     {
-      path: "../assets/fonts/Abhaya_Libre/AbhayaLibre-Bold.ttf",
+      path: "../../public/fonts/Abhaya_Libre/AbhayaLibre-Bold.ttf",
       weight: "700",
       style: "normal",
     },
     {
-      path: "../assets/fonts/Abhaya_Libre/AbhayaLibre-ExtraBold.ttf",
+      path: "../../public/fonts/Abhaya_Libre/AbhayaLibre-ExtraBold.ttf",
       weight: "800",
       style: "normal",
     },
@@ -36,7 +36,7 @@ const abhayaLibre = localFont({
 
 // Cubik font
 const cubik = localFont({
-  src: "../assets/fonts/cubik/Cubik-Regular.otf",
+  src: "../../public/fonts/cubik/Cubik-Regular.otf",
   weight: "400",
   style: "normal",
   variable: "--font-cubik",
@@ -46,82 +46,82 @@ const cubik = localFont({
 const helveticaNeue = localFont({
   src: [
     {
-      path: "../assets/fonts/helvetica-neue-5/HelveticaNeueUltraLight.otf",
+      path: "../../public/fonts/helvetica-neue-5/HelveticaNeueUltraLight.otf",
       weight: "100",
       style: "normal",
     },
     {
-      path: "../assets/fonts/helvetica-neue-5/HelveticaNeueUltraLightItalic.otf",
+      path: "../../public/fonts/helvetica-neue-5/HelveticaNeueUltraLightItalic.otf",
       weight: "100",
       style: "italic",
     },
     {
-      path: "../assets/fonts/helvetica-neue-5/HelveticaNeueThin.otf",
+      path: "../../public/fonts/helvetica-neue-5/HelveticaNeueThin.otf",
       weight: "200",
       style: "normal",
     },
     {
-      path: "../assets/fonts/helvetica-neue-5/HelveticaNeueThinItalic.otf",
+      path: "../../public/fonts/helvetica-neue-5/HelveticaNeueThinItalic.otf",
       weight: "200",
       style: "italic",
     },
     {
-      path: "../assets/fonts/helvetica-neue-5/HelveticaNeueLight.otf",
+      path: "../../public/fonts/helvetica-neue-5/HelveticaNeueLight.otf",
       weight: "300",
       style: "normal",
     },
     {
-      path: "../assets/fonts/helvetica-neue-5/HelveticaNeueLightItalic.otf",
+      path: "../../public/fonts/helvetica-neue-5/HelveticaNeueLightItalic.otf",
       weight: "300",
       style: "italic",
     },
     {
-      path: "../assets/fonts/helvetica-neue-5/HelveticaNeueRoman.otf",
+      path: "../../public/fonts/helvetica-neue-5/HelveticaNeueRoman.otf",
       weight: "400",
       style: "normal",
     },
     {
-      path: "../assets/fonts/helvetica-neue-5/HelveticaNeueItalic.ttf",
+      path: "../../public/fonts/helvetica-neue-5/HelveticaNeueItalic.ttf",
       weight: "400",
       style: "italic",
     },
     {
-      path: "../assets/fonts/helvetica-neue-5/HelveticaNeueMedium.otf",
+      path: "../../public/fonts/helvetica-neue-5/HelveticaNeueMedium.otf",
       weight: "500",
       style: "normal",
     },
     {
-      path: "../assets/fonts/helvetica-neue-5/HelveticaNeueMediumItalic.otf",
+      path: "../../public/fonts/helvetica-neue-5/HelveticaNeueMediumItalic.otf",
       weight: "500",
       style: "italic",
     },
     {
-      path: "../assets/fonts/helvetica-neue-5/HelveticaNeueBold.otf",
+      path: "../../public/fonts/helvetica-neue-5/HelveticaNeueBold.otf",
       weight: "700",
       style: "normal",
     },
     {
-      path: "../assets/fonts/helvetica-neue-5/HelveticaNeueBoldItalic.otf",
+      path: "../../public/fonts/helvetica-neue-5/HelveticaNeueBoldItalic.otf",
       weight: "700",
       style: "italic",
     },
     {
-      path: "../assets/fonts/helvetica-neue-5/HelveticaNeueHeavy.otf",
+      path: "../../public/fonts/helvetica-neue-5/HelveticaNeueHeavy.otf",
       weight: "800",
       style: "normal",
     },
     {
-      path: "../assets/fonts/helvetica-neue-5/HelveticaNeueHeavyItalic.otf",
+      path: "../../public/fonts/helvetica-neue-5/HelveticaNeueHeavyItalic.otf",
       weight: "800",
       style: "italic",
     },
     {
-      path: "../assets/fonts/helvetica-neue-5/HelveticaNeueBlack.otf",
+      path: "../../public/fonts/helvetica-neue-5/HelveticaNeueBlack.otf",
       weight: "900",
       style: "normal",
     },
     {
-      path: "../assets/fonts/helvetica-neue-5/HelveticaNeueBlackItalic.otf",
+      path: "../../public/fonts/helvetica-neue-5/HelveticaNeueBlackItalic.otf",
       weight: "900",
       style: "italic",
     },
