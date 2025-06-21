@@ -67,7 +67,6 @@ export default function SvgMenu({ onSelect }: SvgMenuProps) {
   const pathsRef = useRef<(SVGPathElement | null)[]>([]);
   const centerCircleRef = useRef<SVGCircleElement>(null);
   const textRefs = useRef<(SVGTextElement | null)[]>([]);
-  const circleTextAnimationRef = useRef<GSAPTimeline | null>(null);
 
   const handleMenuSelect = (id: string) => {
     // Call the optional onSelect callback if provided
