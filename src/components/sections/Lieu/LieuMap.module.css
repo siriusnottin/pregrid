@@ -1,0 +1,65 @@
+.lieuMap {
+  position: relative;
+  width: 100%;
+  max-width: 911px;
+}
+
+.mapContainer {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: linear-gradient(rgba(255,255,255,0.02), rgba(240,240,245,0.05));
+}
+
+.mapImageWrapper {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+}
+
+.mapImage {
+  display: block;
+  width: 100%;
+  height: auto;
+  filter: brightness(1.05) contrast(0.95);
+}
+
+.overlayContainer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none; /* allow clicks to pass through to map */
+  mix-blend-mode: multiply; /* Changed to multiply for better blending with map */
+}
+
+.overlayContainer::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.1);
+  mix-blend-mode: overlay;
+  z-index: 1;
+}
+
+/* Target the SVG element inside the overlay container */
+.overlayContainer svg {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 2;
+}
+
+.overlay {
+  width: 100%;
+  height: 100%;
+  filter: contrast(1.2) brightness(1.1);
+  opacity: 0.85;
+}
