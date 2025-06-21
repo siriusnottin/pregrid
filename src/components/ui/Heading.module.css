@@ -1,0 +1,54 @@
+.heading {
+  font-family: var(--font-cubik);
+  font-size: clamp(2.5rem, 8vw, 7.5rem);
+  font-weight: 400;
+  color: #333;
+  letter-spacing: -2%;
+  letter-spacing: -0.02em;
+}
+
+/* Component wrapper classes based on content type */
+.textContent {
+  /* Specific styles for headings with text-only content */
+  position: relative;
+}
+
+.dualContent {
+  /* Specific styles for headings with dual-span content */
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 4rem;
+
+  &>span:nth-child(1),
+  &>span:nth-child(2) {
+    position: relative;
+  }
+}
+
+.letter {
+  &:nth-child(1) {
+    color: #CE462E;
+  }
+
+  &:nth-child(2) {
+    color: #EF9D3F;
+  }
+
+  &:nth-child(3) {
+    color: #53AFB3;
+  }
+
+  &:nth-child(4) {
+    color: #F1CD76;
+  }
+}
+
+.letter:last-child {
+  font-family: var(--font-abhaya-libre);
+  font-weight: 700;
+  color: #F1CD76;
+  position: absolute;
+  top: .1rem;
+}
