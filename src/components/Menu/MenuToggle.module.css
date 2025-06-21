@@ -1,0 +1,43 @@
+.hamburgerButton {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  z-index: 100001; /* Ensure button stays above overlay */
+}
+
+.bar {
+  height: 4px;
+  width: 24px;
+  background-color: black;
+  transition: all 0.3s ease;
+}
+
+.bar:nth-child(1) {
+  background-color: #CE462E;
+}
+
+.bar:nth-child(2) {
+  background-color: #EF9E3F;
+}
+
+.bar:nth-child(3) {
+  background-color: #53AEB3;
+}
+
+/* Animation for when menu is open */
+.open .bar:nth-child(1) {
+  transform: rotate(45deg) translate(5px, 5px);
+}
+
+.open .bar:nth-child(2) {
+  opacity: 0;
+}
+
+.open .bar:nth-child(3) {
+  transform: rotate(-45deg) translate(7px, -6px);
+}
