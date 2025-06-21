@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
+import Header from "@/components/Header/Header";
+import Footer from "@/components/Footer";
 
 // Abhaya Libre font family
 const abhayaLibre = localFont({
@@ -142,7 +144,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${abhayaLibre.variable} ${cubik.variable} ${helveticaNeue.variable}`}>
+        <Header />
         {children}
+        <Footer />
       </body>
     </html>
   );
