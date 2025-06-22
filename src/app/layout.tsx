@@ -145,7 +145,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${abhayaLibre.variable} ${cubik.variable} ${helveticaNeue.variable}`}>
-        <Grid />
+        {process.env.NODE_ENV === 'development' && <Grid />}
         <Header />
         {children}
         <Footer />
