@@ -9,7 +9,7 @@ export default function HeroSection() {
   return (
     <section className={`${styles.heroSection} ${gridStyles.grid}`}>
       <div className={styles.heroContent}>
-        {/* <ImageTrail
+        <ImageTrail
           images={[
             '/images/image 5.png',
             '/images/image 7.png',
@@ -17,11 +17,8 @@ export default function HeroSection() {
             '/images/image 9.png',
             '/images/image 10.png',
           ]}
-          /> */}
-        <Heading 
-          as="h1"
-          className={styles.heroTitle}
-        >
+        />
+        <Heading as="h1" className={styles.heroTitle}>
           <span>Free</span> <span>Grid</span>
         </Heading>
       </div>
