@@ -9,6 +9,7 @@ export default function Home() {
     <div className={styles.page}>
       <main className={styles.main}>
         <HeroSection />
+        <KubistPolygons />
         <AboutSection />
         <KubistPolygons />
         <LieuSection />
