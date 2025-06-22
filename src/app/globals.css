@@ -39,3 +39,16 @@ a {
     color-scheme: dark;
   }
 }
+
+button {
+  cursor: pointer;
+  background: transparent;
+  border: none;
+  padding: 0;
+  font: inherit;
+  font-size: 1.5rem;
+  text-transform: uppercase;
+  color: var(--foreground);
+  font-weight: 500;
+  width: fit-content;
+}

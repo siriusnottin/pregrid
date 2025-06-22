@@ -1,0 +1,14 @@
+.ticketsHeading {
+  margin-bottom: 6.9375rem;
+}
+
+.ticketsSection {
+  margin-bottom: 8.5rem;
+
+  .ticketsContainer {
+    grid-column: 3 / 11;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 5.625rem;
+  }
+}
