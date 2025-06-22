@@ -50,22 +50,6 @@ export default function GaleriePage() {
           </div>
         ))}
       </div>
-
-      <footer className={styles.footer}>
-        <Image 
-          src="/icons/logo.svg" 
-          alt="Logo" 
-          width={120} 
-          height={40} 
-          className={styles.footerLogo} 
-        />
-        
-        <div className={styles.shapes}>
-          <Image src="/icons/forms/Rectangle 24.svg" alt="Shape" width={24} height={24} className={styles.shape} />
-          <Image src="/icons/forms/Rectangle 25.svg" alt="Shape" width={24} height={24} className={styles.shape} />
-          <Image src="/icons/forms/Rectangle 26.svg" alt="Shape" width={24} height={24} className={styles.shape} />
-        </div>
-      </footer>
     </div>
   );
 }
