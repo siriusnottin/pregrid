@@ -28,13 +28,13 @@ export default function AboutSection() {
         </div>
         <div className={styles.aboutText}>
           <p>
-            Fondé pour célébrer l’art sous toutes ses formes, notre musée s’inscrit aujourd’hui dans une nouvelle ère.
+            Fondé pour célébrer l&apos;art sous toutes ses formes, notre musée s&apos;inscrit aujourd&apos;hui dans une nouvelle ère.
           </p>
           <p>
-            À travers cette exposition dédiée au cubisme, il affirme son engagement à rendre l’art accessible, vibrant et connecté aux générations actuelles.
+            À travers cette exposition dédiée au cubisme, il affirme son engagement à rendre l&apos;art accessible, vibrant et connecté aux générations actuelles.
           </p>
           <p>
-            Entre murs chargés d’histoire et interfaces interactives, le musée réinvente sa manière de transmettre la culture.
+            Entre murs chargés d&apos;histoire et interfaces interactives, le musée réinvente sa manière de transmettre la culture.
           </p>
         </div>
       </div>
