@@ -10,20 +10,24 @@
 /* Component wrapper classes based on content type */
 .textContent {
   /* Specific styles for headings with text-only content */
+  justify-self: center;
   position: relative;
 }
 
 .dualContent {
   /* Specific styles for headings with dual-span content */
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 4rem;
-
   &>span:nth-child(1),
   &>span:nth-child(2) {
     position: relative;
+  }
+
+  &>span:nth-child(1) {
+    grid-column: 1/5;
+    justify-self: start;
+  }
+  &>span:nth-child(2) {
+    grid-column: 7/11;
+    justify-self: end;
   }
 }
 
