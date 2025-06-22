@@ -1,0 +1,38 @@
+.histoireHeading {
+  margin-bottom: 13.3125rem;
+}
+
+.histoireContent {
+
+  p {
+    font-weight: 400;
+    font-size: 1rem;
+    letter-spacing: 0.02em;
+    margin-bottom: 1.5rem;
+  }
+
+  section:nth-child(1) {
+    margin-bottom: 12.5rem;
+    .textContainer {
+      grid-column: 2/5;
+      align-self: center;
+  
+    }
+    .imageContainer {
+      grid-column: 7/11;
+    }
+  }
+
+  section:nth-child(2) {
+    margin-bottom: 7.5rem;
+
+    .imageContainer {
+      grid-column: 2/6;
+    }
+    .textContainer {
+      grid-column: 8/11;
+      align-self: center;
+    }
+  }
+
+}
