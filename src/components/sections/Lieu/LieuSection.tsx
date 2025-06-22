@@ -1,6 +1,6 @@
 'use client';
 
-import LieuEvents from './LieuOpenings';
+import LieuOpenings from './LieuOpenings';
 import LieuMap from './LieuMap';
 import styles from './LieuSection.module.css'
 import Heading from '@/components/ui/Heading';
@@ -18,7 +18,7 @@ export default function LieuSection() {
       </div>
       <div className={styles.lieuContent}>
         <LieuMap />
-        <LieuEvents />
+        <LieuOpenings />
       </div>
     </section>
   );
