@@ -11,7 +11,7 @@ export default function Header() {
       <div className={styles.logo}>
         <Link href="/" className={styles.logoLink} aria-label="Free Grid Home" title="Free Grid Home">
           <Image
-            src="/icons/logo.svg"
+            src="/logo.svg"
             alt="Free Grid logo: stylized cubic letter F"
             width={51}
             height={51}
