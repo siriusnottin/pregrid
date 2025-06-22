@@ -1,4 +1,6 @@
 .lieuContent {
-  display: grid;
-  grid-template-columns: auto 1fr;
+  
+  .lieuMap {
+    grid-column: 1/8;
+  }
 }

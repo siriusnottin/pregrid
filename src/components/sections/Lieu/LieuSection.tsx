@@ -2,6 +2,7 @@
 
 import LieuOpenings from './LieuOpenings';
 import LieuMap from './LieuMap';
+import gridStyles from '@/styles/grid.module.css';
 import styles from './LieuSection.module.css'
 import Heading from '@/components/ui/Heading';
 
@@ -16,7 +17,7 @@ export default function LieuSection() {
           Lieu
         </Heading>
       </div>
-      <div className={styles.lieuContent}>
+      <div className={`${styles.lieuContent} ${gridStyles.grid}`}>
         <LieuMap />
         <LieuOpenings />
       </div>

@@ -1,0 +1,60 @@
+.container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem 0;
+}
+.grid {
+  display: grid;
+  grid-template-rows: repeat(5, 110px);
+  grid-template-columns: repeat(3, 170px);
+  gap: 32px;
+}
+.block {
+  border-radius: 18px;
+  border: 4px solid #191919;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.13);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Abhaya Libre', serif;
+  font-weight: bold;
+  font-size: 1.5rem;
+  padding: 1.2rem 0.5rem;
+  text-align: center;
+  min-width: 120px;
+  min-height: 90px;
+}
+.spacer {
+  /* Empty grid cell for masonry effect */
+  background: transparent;
+  border: none;
+  box-shadow: none;
+}
+.lundi, .vendredi {
+  background: #C1442E;
+  color: #191919;
+}
+.mardi, .samedi {
+  background: #E98B2A;
+  color: #191919;
+}
+.mercredi, .dimanche {
+  background: #3B9CA6;
+  color: #191919;
+}
+.jeudi {
+  background: #F2D16B;
+  color: #191919;
+}
+.day {
+  margin-bottom: 0.5rem;
+  font-size: 1.25em;
+  font-weight: bold;
+}
+.time {
+  font-weight: normal;
+  font-size: 1.15em;
+}
