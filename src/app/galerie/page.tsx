@@ -1,5 +1,6 @@
 import Image from "next/image";
 import styles from "./page.module.css";
+import Heading from "@/components/ui/Heading";
 
 interface GalleryItem {
   id: number;
@@ -23,8 +24,7 @@ export default function GaleriePage() {
 
   return (
     <div className={styles.container}>
-      <h1 className={styles.title}>GALERIE</h1>
-      
+      <Heading as="h1" className={styles.galerieHeading}>GALERIE</Heading>
       <div className={styles.gallery}>
         {galleryItems.map((item) => (
           <div 
