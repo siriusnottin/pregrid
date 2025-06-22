@@ -1,6 +1,7 @@
 'use client';
 
 import styles from './AboutSection.module.css';
+import gridStyles from '@/styles/grid.module.css';
 import Heading from '@/components/ui/Heading';
 import Image from 'next/image';
 
@@ -13,7 +14,7 @@ export default function AboutSection() {
       >
         About
       </Heading>
-      <div className={styles.aboutContent}>
+      <div className={`${styles.aboutContent} ${gridStyles.grid}`}>
         <p className={styles.subtitle}>
           Venez découvrir un lieu où formes géométriques, vision artistique et innovation numérique se rencontrent.
         </p>
