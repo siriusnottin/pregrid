@@ -2,13 +2,18 @@ import styles from './KubistPolygons.module.css';
 
 interface KubistPolygonsProps {
   height?: number;
-  width?: number;
 }
 
-export default function KubistPolygons({ height = 201, width = 1440 }: KubistPolygonsProps) {
+export default function KubistPolygons({ height = 201 }: KubistPolygonsProps) {
   return (
     <div className={styles.kubistPolygons}>
-      <svg width={width} height={height} viewBox="0 0 1440 201" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <svg
+        width="100%"
+        height={height}
+        viewBox="0 0 1440 201"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
         <path d="M1386.55 -11.1672H1305.03L1365.77 57.428L1386.55 -11.1672Z" fill="#224F93" stroke="#224F93" strokeLinejoin="bevel" />
         <path d="M1386.55 -11.1672L1365.77 57.428L1476.06 -6.38152L1386.55 -11.1672Z" fill="#294F96" stroke="#294F96" strokeLinejoin="bevel" />
         <path d="M1309.82 65.404L1268.27 54.2373L1309.82 119.642V65.404Z" fill="#536A8C" stroke="#536A8C" strokeLinejoin="bevel" />
