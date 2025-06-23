@@ -1,13 +1,13 @@
 'use client';
 
-import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { useMenu } from '@/context/MenuContext';
 import MenuToggle from './MenuToggle';
 import SvgMenu from './SvgMenu';
 import styles from './Menu.module.css';
 
 export default function Menu() {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { isMenuOpen, setIsMenuOpen } = useMenu();
   const router = useRouter();
 
   const handleMenuToggle = () => {
@@ -16,7 +16,7 @@ export default function Menu() {
 
   const handleMenuSelect = (id: string) => {
     setIsMenuOpen(false);
-    
+
     if (id === 'home') {
       router.push('/');
     } else {
@@ -26,10 +26,7 @@ export default function Menu() {
 
   return (
     <>
-      <MenuToggle
-        isOpen={isMenuOpen}
-        onClick={handleMenuToggle}
-      />
+      <MenuToggle isOpen={isMenuOpen} onClick={handleMenuToggle} />
       {isMenuOpen && (
         <div className={styles.menuOverlay}>
           <SvgMenu onSelect={handleMenuSelect} />

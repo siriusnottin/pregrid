@@ -1,4 +1,5 @@
 .heroSection {
+  position: relative;
   min-height: 97vh;
 }
 
