@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import Image from 'next/image';
 import styles from './Ticket.module.css';
@@ -29,7 +29,7 @@ export default function Ticket(props: TicketProps) {
       <div className={styles.barcode} style={{ backgroundColor: props.color || '#f0f0f0' }}>
         <Image src="/images/barcode.png" alt="Code-barres du billet" width={327} height={101} />
       </div>
-      <TicketBtn title='Buy' color={props.btnColor || props.color || '#C73D29'} />
+      <TicketBtn title="Buy" color={props.btnColor || props.color || '#C73D29'} />
     </article>
   );
 }
