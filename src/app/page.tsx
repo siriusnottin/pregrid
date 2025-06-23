@@ -6,15 +6,13 @@ import LieuSection from "@/components/sections/Lieu/LieuSection";
 
 export default function Home() {
   return (
-    <div className={styles.page}>
-      <main className={styles.main}>
-        <HeroSection />
-        <KubistPolygons />
-        <AboutSection />
-        <KubistPolygons />
-        <LieuSection />
-        <KubistPolygons />
-      </main>
-    </div>
+    <main className={styles.main}>
+      <HeroSection />
+      <KubistPolygons />
+      <AboutSection />
+      <KubistPolygons />
+      <LieuSection />
+      <KubistPolygons />
+    </main>
   );
 }
