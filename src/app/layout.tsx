@@ -1,9 +1,7 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
-import Header from "@/components/Header/Header";
-import Footer from "@/components/Footer";
-import Grid from "@/components/ui/Grid";
+import ClientLayout from './ClientLayout';
 
 // Abhaya Libre font family
 const abhayaLibre = localFont({
@@ -145,10 +143,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${abhayaLibre.variable} ${cubik.variable} ${helveticaNeue.variable}`}>
-        {process.env.NODE_ENV === 'development' && <Grid />}
-        <Header />
-        {children}
-        <Footer />
+        <ClientLayout>{children}</ClientLayout>
       </body>
     </html>
   );
