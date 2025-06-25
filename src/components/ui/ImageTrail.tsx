@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useRef, useState, useCallback } from 'react';
+import React, { useEffect, useRef, useState, useCallback, useMemo } from 'react';
 import { gsap } from 'gsap';
 import { useMenu } from '@/context/MenuContext';
 import styles from './ImageTrail.module.css';
@@ -28,6 +28,15 @@ const MathUtils = {
   distance: (x1: number, y1: number, x2: number, y2: number) => Math.hypot(x2 - x1, y2 - y1),
 };
 
+const shuffleArray = (array: string[]) => {
+  const arr = [...array];
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+};
+
 const ImageTrail: React.FC<ImageTrailProps> = ({ images, threshold = 100, className = '' }) => {
   const { isMenuOpen } = useMenu();
   const containerRef = useRef<HTMLDivElement>(null);
@@ -45,28 +54,28 @@ const ImageTrail: React.FC<ImageTrailProps> = ({ images, threshold = 100, classN
 
   const [imagesLoaded, setImagesLoaded] = useState(false);
 
+  const shuffledImages = useMemo(() => shuffleArray(images), [images]);
+
   // Preload images
   const preloadImages = useCallback(() => {
     let loaded = 0;
-
-    images.forEach((src) => {
+    shuffledImages.forEach((src) => {
       const img = new Image();
       img.onload = () => {
         loaded++;
-        if (loaded === images.length) {
+        if (loaded === shuffledImages.length) {
           setImagesLoaded(true);
         }
       };
       img.onerror = () => {
-        console.warn(`Failed to load image: ${src}`);
         loaded++;
-        if (loaded === images.length) {
+        if (loaded === shuffledImages.length) {
           setImagesLoaded(true);
         }
       };
       img.src = src;
     });
-  }, [images]);
+  }, [shuffledImages]);
 
   // Get mouse position relative to container
   const getMousePos = useCallback((ev: MouseEvent): MousePosition => {
@@ -300,7 +309,7 @@ const ImageTrail: React.FC<ImageTrailProps> = ({ images, threshold = 100, classN
 
   return (
     <div ref={containerRef} className={`${styles.imageTrail} ${className}`}>
-      {images.map((src, index) => (
+      {shuffledImages.map((src, index) => (
         <img
           key={index}
           src={src}
