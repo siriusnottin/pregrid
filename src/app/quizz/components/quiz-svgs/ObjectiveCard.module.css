@@ -1,0 +1,14 @@
+.svgContainer {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.animatedSvg {
+  width: 100%;
+  height: auto;
+  max-width: 300px;
+}

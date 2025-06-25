@@ -1,0 +1,45 @@
+.welcomeBanner {
+  width: 100%;
+  min-width: 330px;
+  max-width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 2rem 0;
+  cursor: pointer;
+  min-height: 98px; /* Ensure space for the SVG */
+  grid-column: 3 / 4; /* Adjust to fit within the grid */
+}
+
+.bannerSvg {
+  width: 100%;
+  height: auto;
+  min-width: unset; /* Remove fixed pixel width */
+  max-width: 100%; /* Ensure SVG scales with container */
+  transition: filter 0.3s ease;
+  display: block; /* Ensure SVG is displayed */
+}
+
+/* Fallback visibility for banner elements */
+.bannerSvg rect,
+.bannerSvg text {
+  opacity: 1 !important;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .welcomeBanner {
+    margin: 1rem 0;
+    grid-column: span 12; /* Full width for smaller screens */
+  }
+  
+  .bannerSvg {
+    max-width: 90%; /* Slightly smaller for medium screens */
+  }
+}
+
+@media (max-width: 480px) {
+  .bannerSvg {
+    max-width: 80%; /* Further reduce size for small screens */
+  }
+}
