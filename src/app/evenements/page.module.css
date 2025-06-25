@@ -1,0 +1,15 @@
+.eventsHeading {
+  margin-bottom: 13.3125rem;
+}
+
+.eventsList {
+  row-gap: 4rem;
+
+  .eventCard:nth-child(odd) {
+    grid-column: 2/7;
+  }
+
+  .eventCard:nth-child(even) {
+    grid-column: 6/11;
+  }
+}
