@@ -2,25 +2,41 @@
 
 import { useRouter } from 'next/navigation';
 import { useMenu } from '@/context/MenuContext';
+import { useRef } from 'react';
 import MenuToggle from './MenuToggle';
 import SvgMenu from './SvgMenu';
 import styles from './Menu.module.css';
 
 export default function Menu() {
-  const { isMenuOpen, setIsMenuOpen } = useMenu();
+  const { isMenuOpen, setIsMenuOpen, triggerPageExitAndNavigate } = useMenu();
   const router = useRouter();
+  const svgMenuRef = useRef<any>(null);
 
-  const handleMenuToggle = () => {
+  const handleMenuToggle = async () => {
+    if (isMenuOpen && svgMenuRef.current && svgMenuRef.current.animateExit) {
+      await svgMenuRef.current.animateExit();
+    }
     setIsMenuOpen(!isMenuOpen);
   };
 
-  const handleMenuSelect = (id: string) => {
+  const handleMenuSelect = async (id: string) => {
+    if (svgMenuRef.current && svgMenuRef.current.animateExit) {
+      await svgMenuRef.current.animateExit();
+    }
     setIsMenuOpen(false);
-
-    if (id === 'home') {
-      router.push('/');
+    if (triggerPageExitAndNavigate) {
+      if (id === 'home') {
+        await triggerPageExitAndNavigate('/');
+      } else {
+        await triggerPageExitAndNavigate(`/${id}`);
+      }
     } else {
-      router.push(`/${id}`);
+      // fallback
+      if (id === 'home') {
+        router.push('/');
+      } else {
+        router.push(`/${id}`);
+      }
     }
   };
 
@@ -29,7 +45,7 @@ export default function Menu() {
       <MenuToggle isOpen={isMenuOpen} onClick={handleMenuToggle} />
       {isMenuOpen && (
         <div className={styles.menuOverlay}>
-          <SvgMenu onSelect={handleMenuSelect} />
+          <SvgMenu ref={svgMenuRef} onSelect={handleMenuSelect} />
         </div>
       )}
     </>

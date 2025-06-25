@@ -21,3 +21,8 @@
     opacity: 1;
   }
 }
+
+.menuOverlay svg path:focus,
+.menuOverlay svg circle:focus {
+  outline: none;
+}

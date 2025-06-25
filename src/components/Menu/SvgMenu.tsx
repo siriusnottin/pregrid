@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, forwardRef, useImperativeHandle } from 'react';
 import gsap from "gsap";
 
 const DEBUG_MODE = process.env.NODE_ENV === 'development';
@@ -65,10 +65,36 @@ interface SvgMenuProps {
   onSelect?: (id: string) => void;
 }
 
-export default function SvgMenu({ onSelect }: SvgMenuProps) {
+const SvgMenu = forwardRef(function SvgMenu({ onSelect }: SvgMenuProps, ref) {
   const pathsRef = useRef<(SVGPathElement | null)[]>([]);
   const centerCircleRef = useRef<SVGCircleElement>(null);
   const textRefs = useRef<(SVGTextElement | null)[]>([]);
+
+  useImperativeHandle(ref, () => ({
+    animateExit: () => {
+      return new Promise<void>((resolve) => {
+        gsap.to(pathsRef.current, {
+          opacity: 0,
+          scale: 0.5,
+          rotation: -180,
+          transformOrigin: 'center center',
+          stagger: 0.15,
+          duration: 0.7,
+          ease: 'power2.in',
+        });
+        gsap.to(centerCircleRef.current, {
+          opacity: 0,
+          scale: 0,
+          rotation: 360,
+          transformOrigin: 'center center',
+          duration: 0.7,
+          ease: 'power2.in',
+          delay: 0.2,
+          onComplete: resolve,
+        });
+      });
+    },
+  }));
 
   const handleMenuSelect = (id: string) => {
     // Call the optional onSelect callback if provided
@@ -81,11 +107,11 @@ export default function SvgMenu({ onSelect }: SvgMenuProps) {
     // Animate paths
     gsap.fromTo(
       pathsRef.current,
-      { 
-        opacity: 0, 
-        scale: 0.5, 
+      {
+        opacity: 0,
+        scale: 0.5,
         rotation: -180,
-        transformOrigin: "center center" 
+        transformOrigin: 'center center',
       },
       {
         opacity: 1,
@@ -93,25 +119,25 @@ export default function SvgMenu({ onSelect }: SvgMenuProps) {
         rotation: 0,
         stagger: 0.2,
         duration: 1.2,
-        ease: "back.out(1.7)",
+        ease: 'back.out(1.7)',
       }
     );
 
     // Animate center circle
     gsap.fromTo(
       centerCircleRef.current,
-      { 
-        opacity: 0, 
-        scale: 0, 
+      {
+        opacity: 0,
+        scale: 0,
         rotation: 360,
-        transformOrigin: "center center" 
+        transformOrigin: 'center center',
       },
       {
         opacity: 1,
         scale: 1,
         rotation: 0,
         duration: 1.5,
-        ease: "elastic.out(1, 0.3)",
+        ease: 'elastic.out(1, 0.3)',
         delay: menuItems.length * 0.2,
       }
     );
@@ -122,8 +148,8 @@ export default function SvgMenu({ onSelect }: SvgMenuProps) {
     gsap.to(pathsRef.current[index], {
       scale: 1.05,
       duration: 0.4,
-      ease: "power2.out",
-      transformOrigin: "center center",
+      ease: 'power2.out',
+      transformOrigin: 'center center',
     });
 
     // Animate text with appropriate effect based on type
@@ -133,15 +159,15 @@ export default function SvgMenu({ onSelect }: SvgMenuProps) {
       gsap.to(textRefs.current[index], {
         scale: 1.05,
         duration: 0.4,
-        ease: "power2.out",
+        ease: 'power2.out',
       });
     } else {
       // Normal text animation
       gsap.to(textRefs.current[index], {
         scale: 1.15,
-        rotation: "+=5",
+        rotation: '+=5',
         duration: 0.4,
-        ease: "back.out(1.7)",
+        ease: 'back.out(1.7)',
       });
     }
   };
@@ -151,8 +177,8 @@ export default function SvgMenu({ onSelect }: SvgMenuProps) {
     gsap.to(pathsRef.current[index], {
       scale: 1,
       duration: 0.4,
-      ease: "power2.out",
-      transformOrigin: "center center",
+      ease: 'power2.out',
+      transformOrigin: 'center center',
     });
 
     // Reset text with appropriate effect based on type
@@ -162,7 +188,7 @@ export default function SvgMenu({ onSelect }: SvgMenuProps) {
       gsap.to(textRefs.current[index], {
         scale: 1,
         duration: 0.4,
-        ease: "power2.out",
+        ease: 'power2.out',
       });
     } else {
       // Reset normal text
@@ -170,7 +196,7 @@ export default function SvgMenu({ onSelect }: SvgMenuProps) {
         scale: 1,
         rotation: menuItems[index].textRotation,
         duration: 0.4,
-        ease: "back.out(1.7)",
+        ease: 'back.out(1.7)',
       });
     }
   };
@@ -183,7 +209,7 @@ export default function SvgMenu({ onSelect }: SvgMenuProps) {
       preserveAspectRatio="xMidYMid slice"
       role="menu"
       aria-label="Main navigation menu"
-      style={{ 
+      style={{
         width: '100vw',
         height: '100vh',
         position: 'absolute',
@@ -194,76 +220,76 @@ export default function SvgMenu({ onSelect }: SvgMenuProps) {
       {/* Background */}
       <rect width="1440" height="1024" fill="#FF851B" />
 
-        <defs>
-          <path 
-            id="evenementsPath" 
-            d={evenementsPathData}
-          />
-          <path
-            id="circlePath"
-            d={circlePathData}
-          />
-        </defs>
+      <defs>
+        <path id="evenementsPath" d={evenementsPathData} />
+        <path id="circlePath" d={circlePathData} />
+      </defs>
 
-        {menuItems.map(({ id, path, label, color, textColor, textPosition, textRotation}, i) => (
-          <g key={id}>
-            <path
-              d={path}
-              fill={color}
-              style={{ cursor: "pointer" }}
-              onMouseEnter={() => handleMouseEnter(i)}
-              onMouseLeave={() => handleMouseLeave(i)}
-              onClick={() => handleMenuSelect(id)}
-              tabIndex={0}
-              onKeyDown={(e) => e.key === "Enter" && handleMenuSelect(id)}
-              aria-label={label}
-              ref={(el) => { pathsRef.current[i] = el; }}
-            />
-            {id === 'evenements' ? (
-              <text
-                ref={(el) => { textRefs.current[i] = el; }}
-                fill={textColor}
-                fontWeight="400"
-                fontSize="4rem"
-                textAnchor="start"
-                dominantBaseline="middle"
-                pointerEvents="none"
-                style={{ 
-                  userSelect: "none", 
-                  fontFamily: "var(--font-cubik), 'Cubik', monospace",
-                  letterSpacing: "3rem",
-                  textTransform: "uppercase",
-                }}
-              >
-                <textPath href="#evenementsPath" startOffset="15%">
-                  {label}
-                </textPath>
-              </text>
-            ) : (
-              <text
-                ref={(el) => { textRefs.current[i] = el; }}
-                x={textPosition.x}
-                y={textPosition.y}
-                fill={textColor}
-                fontWeight="400"
-                fontSize="3rem"
-                textAnchor="middle"
-                dominantBaseline="middle"
-                pointerEvents="none"
-                transform={`rotate(${textRotation} ${textPosition.x} ${textPosition.y})`}
-                style={{ 
-                  userSelect: "none", 
-                  fontFamily: "var(--font-cubik), 'Cubik', monospace",
-                  letterSpacing: ".25rem",
-                  textTransform: "uppercase"
-                }}
-              >
+      {menuItems.map(({ id, path, label, color, textColor, textPosition, textRotation }, i) => (
+        <g key={id}>
+          <path
+            d={path}
+            fill={color}
+            style={{ cursor: 'pointer' }}
+            onMouseEnter={() => handleMouseEnter(i)}
+            onMouseLeave={() => handleMouseLeave(i)}
+            onClick={() => handleMenuSelect(id)}
+            tabIndex={0}
+            onKeyDown={(e) => e.key === 'Enter' && handleMenuSelect(id)}
+            aria-label={label}
+            ref={(el) => {
+              pathsRef.current[i] = el;
+            }}
+          />
+          {id === 'evenements' ? (
+            <text
+              ref={(el) => {
+                textRefs.current[i] = el;
+              }}
+              fill={textColor}
+              fontWeight="400"
+              fontSize="4rem"
+              textAnchor="start"
+              dominantBaseline="middle"
+              pointerEvents="none"
+              style={{
+                userSelect: 'none',
+                fontFamily: "var(--font-cubik), 'Cubik', monospace",
+                letterSpacing: '3rem',
+                textTransform: 'uppercase',
+              }}
+            >
+              <textPath href="#evenementsPath" startOffset="15%">
                 {label}
-              </text>
-            )}
-          </g>
-        ))}
-      
+              </textPath>
+            </text>
+          ) : (
+            <text
+              ref={(el) => {
+                textRefs.current[i] = el;
+              }}
+              x={textPosition.x}
+              y={textPosition.y}
+              fill={textColor}
+              fontWeight="400"
+              fontSize="3rem"
+              textAnchor="middle"
+              dominantBaseline="middle"
+              pointerEvents="none"
+              transform={`rotate(${textRotation} ${textPosition.x} ${textPosition.y})`}
+              style={{
+                userSelect: 'none',
+                fontFamily: "var(--font-cubik), 'Cubik', monospace",
+                letterSpacing: '.25rem',
+                textTransform: 'uppercase',
+              }}
+            >
+              {label}
+            </text>
+          )}
+        </g>
+      ))}
+
       {/* Visualize the EVENEMENTS text path for editing */}
       {DEBUG_MODE && (
         <path
@@ -276,63 +302,57 @@ export default function SvgMenu({ onSelect }: SvgMenuProps) {
           pointerEvents="none"
         />
       )}
-      
+
       {/* Visualize and create hit area for circle path */}
+      <circle cx="667" cy="497" r="150" fill="transparent" pointerEvents="all" />
+
+      {/* Center HOME circle */}
       <circle
+        ref={centerCircleRef}
         cx="667"
         cy="497"
-        r="150"
-        fill="transparent"
-        pointerEvents="all"
+        r="137"
+        fill="#000000"
+        style={{ cursor: 'pointer' }}
+        onClick={() => handleMenuSelect('home')}
+        tabIndex={0}
+        onKeyDown={(e) => e.key === 'Enter' && handleMenuSelect('home')}
+        aria-label="HOME"
+        onMouseEnter={() => {
+          gsap.to(centerCircleRef.current, {
+            scale: 1.1,
+            duration: 0.3,
+            ease: 'power2.out',
+            transformOrigin: 'center center',
+          });
+        }}
+        onMouseLeave={() => {
+          gsap.to(centerCircleRef.current, {
+            scale: 1,
+            duration: 0.3,
+            ease: 'power2.out',
+            transformOrigin: 'center center',
+          });
+        }}
       />
-
-        {/* Center HOME circle */}
-        <circle
-          ref={centerCircleRef}
-          cx="667"
-          cy="497"
-          r="137"
-          fill="#000000"
-          style={{ cursor: "pointer" }}
-          onClick={() => handleMenuSelect("home")}
-          tabIndex={0}
-          onKeyDown={(e) => e.key === "Enter" && handleMenuSelect("home")}
-          aria-label="HOME"
-          onMouseEnter={() => {
-            gsap.to(centerCircleRef.current, {
-              scale: 1.1,
-              duration: 0.3,
-              ease: "power2.out",
-              transformOrigin: "center center"
-            });
-          }}
-          onMouseLeave={() => {
-            gsap.to(centerCircleRef.current, {
-              scale: 1,
-              duration: 0.3,
-              ease: "power2.out",
-              transformOrigin: "center center"
-            });
-          }}
-        />
-        <text
-          x="667"
-          y="497"
-          fill="#FF6B35"
-          fontWeight="400"
-          fontSize="2.75rem"
-          textAnchor="middle"
-          dominantBaseline="middle"
-          pointerEvents="none"
-          style={{ 
-            userSelect: "none",
-            fontFamily: "var(--font-cubik), 'Cubik', monospace",
-            letterSpacing: "6px",
-            textTransform: "uppercase"
-          }}
-        >
-          HOME
-        </text>
+      <text
+        x="667"
+        y="497"
+        fill="#FF6B35"
+        fontWeight="400"
+        fontSize="2.75rem"
+        textAnchor="middle"
+        dominantBaseline="middle"
+        pointerEvents="none"
+        style={{
+          userSelect: 'none',
+          fontFamily: "var(--font-cubik), 'Cubik', monospace",
+          letterSpacing: '6px',
+          textTransform: 'uppercase',
+        }}
+      >
+        HOME
+      </text>
       <text
         fill="#FFFFFF"
         fontWeight="400"
@@ -341,27 +361,21 @@ export default function SvgMenu({ onSelect }: SvgMenuProps) {
         dominantBaseline="hanging"
         pointerEvents="none"
         style={{
-          userSelect: "none",
+          userSelect: 'none',
           fontFamily: "var(--font-cubik), 'Cubik', monospace",
-          letterSpacing: "1.24em",
-          textTransform: "uppercase",
+          letterSpacing: '1.24em',
+          textTransform: 'uppercase',
         }}
       >
-        <textPath
-          href="#circlePath"
-          startOffset="5%"
-          id="circlePath1"
-        >
+        <textPath href="#circlePath" startOffset="5%" id="circlePath1">
           HOME
         </textPath>
-        <textPath
-          href="#circlePath"
-          startOffset="55%"
-          id="circlePath2"
-        >
+        <textPath href="#circlePath" startOffset="55%" id="circlePath2">
           HOME
         </textPath>
       </text>
     </svg>
   );
-}
+});
+
+export default SvgMenu;

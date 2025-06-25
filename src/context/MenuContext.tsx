@@ -5,6 +5,7 @@ import React, { createContext, useContext, useState, ReactNode } from 'react';
 interface MenuContextType {
   isMenuOpen: boolean;
   setIsMenuOpen: (isOpen: boolean) => void;
+  triggerPageExitAndNavigate?: (path: string) => Promise<void>;
 }
 
 const MenuContext = createContext<MenuContextType | undefined>(undefined);
@@ -19,13 +20,17 @@ export const useMenu = () => {
 
 interface MenuProviderProps {
   children: ReactNode;
+  triggerPageExitAndNavigate?: (path: string) => Promise<void>;
 }
 
-export const MenuProvider: React.FC<MenuProviderProps> = ({ children }) => {
+export const MenuProvider: React.FC<MenuProviderProps> = ({
+  children,
+  triggerPageExitAndNavigate,
+}) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
-    <MenuContext.Provider value={{ isMenuOpen, setIsMenuOpen }}>
+    <MenuContext.Provider value={{ isMenuOpen, setIsMenuOpen, triggerPageExitAndNavigate }}>
       {children}
     </MenuContext.Provider>
   );
