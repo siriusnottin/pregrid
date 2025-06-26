@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useMemo, useCallback } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import styles from './CubismPrompt.module.css';
@@ -12,10 +12,7 @@ interface OCubismPromptbjectiveCard {
   className?: string;
 }
 
-export default function CubismPrompt({ 
-  text,
-  className
-}: OCubismPromptbjectiveCard) {
+export default function CubismPrompt({ text, className }: OCubismPromptbjectiveCard) {
   const svgRef = useRef<SVGSVGElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -24,24 +21,37 @@ export default function CubismPrompt({
     const pt = svg.createSVGPoint();
     pt.x = e.clientX;
     pt.y = e.clientY;
-    const svgP = pt.matrixTransform(svg.getScreenCTM().inverse());
+    const ctm = svg.getScreenCTM();
+    if (!ctm) return { x: pt.x, y: pt.y };
+    const svgP = pt.matrixTransform(ctm.inverse());
     return { x: svgP.x, y: svgP.y };
   }
 
   // Shared points for morphing shapes
-  const sharedPoints = [
-    { x: 173.5, y: 0 },    // 0: triangle top
-    { x: 279, y: 66 },     // 1: right
-    { x: 279, y: 182 },    // 2: bottom right (rect)
-    { x: 66, y: 576.5 },   // 3: bottom left (SVG)
-    { x: 66, y: 66 },      // 4: left
-    { x: 0, y: 171.5 },    // 5: far left mid
-    { x: 66, y: 282 },     // 6: left bottom (rect)
-  ];
+  const sharedPoints = useMemo(
+    () => [
+      { x: 173.5, y: 0 }, // 0: triangle top
+      { x: 279, y: 66 }, // 1: right
+      { x: 279, y: 182 }, // 2: bottom right (rect)
+      { x: 66, y: 576.5 }, // 3: bottom left (SVG)
+      { x: 66, y: 66 }, // 4: left
+      { x: 0, y: 171.5 }, // 5: far left mid
+      { x: 66, y: 282 }, // 6: left bottom (rect)
+    ],
+    []
+  );
 
   // Path helpers for morphing shapes
-  const trianglePath = (pts: typeof sharedPoints) => `M${pts[0].x} ${pts[0].y}L${pts[1].x} ${pts[1].y}L${pts[4].x} ${pts[4].y}Z`;
-  const brownLeftPath = (pts: typeof sharedPoints) => `M${pts[5].x} ${pts[5].y}L${pts[4].x} ${pts[4].y}L${pts[6].x} ${pts[6].y}Z`;
+  const trianglePath = useCallback(
+    (pts: typeof sharedPoints) =>
+      `M${pts[0].x} ${pts[0].y}L${pts[1].x} ${pts[1].y}L${pts[4].x} ${pts[4].y}Z`,
+    []
+  );
+  const brownLeftPath = useCallback(
+    (pts: typeof sharedPoints) =>
+      `M${pts[5].x} ${pts[5].y}L${pts[4].x} ${pts[4].y}L${pts[6].x} ${pts[6].y}Z`,
+    []
+  );
   // Brown bottom: static triangle, visually separated from orange rect
   const brownBottomPath = () => `M66 276.5L66 210L279 276.5Z`;
 
@@ -49,11 +59,12 @@ export default function CubismPrompt({
     if (!svgRef.current || !containerRef.current) return;
     const container = containerRef.current;
     const svg = svgRef.current;
-    let points = sharedPoints.map(p => ({ ...p }));
+    let points = sharedPoints.map((p) => ({ ...p }));
     function onMouseMove(e: MouseEvent) {
       const mouse = getSvgMouse(e, svg);
       // Find closest shared point
-      let minDist = Infinity, minIdx = 0;
+      let minDist = Infinity,
+        minIdx = 0;
       for (let i = 0; i < points.length; i++) {
         const dx = points[i].x - mouse.x;
         const dy = points[i].y - mouse.y;
@@ -65,9 +76,7 @@ export default function CubismPrompt({
       }
       // Move only the closest point
       const newPoints = points.map((pt, i) =>
-        i === minIdx
-          ? { x: pt.x + (mouse.x - pt.x) * 0.25, y: pt.y + (mouse.y - pt.y) * 0.25 }
-          : pt
+        i === minIdx ? { x: pt.x + (mouse.x - pt.x) * 0.25, y: pt.y + (mouse.y - pt.y) * 0.25 } : pt
       );
       // Animate all shapes using the new points
       gsap.to('.orange-triangle', {
@@ -98,8 +107,12 @@ export default function CubismPrompt({
       points = newPoints;
     }
     function onMouseLeave() {
-      points = sharedPoints.map(p => ({ ...p }));
-      gsap.to('.orange-triangle', { attr: { d: trianglePath(points) }, duration: 0.5, ease: 'power2.out' });
+      points = sharedPoints.map((p) => ({ ...p }));
+      gsap.to('.orange-triangle', {
+        attr: { d: trianglePath(points) },
+        duration: 0.5,
+        ease: 'power2.out',
+      });
       gsap.to('.orange-bg', {
         attr: {
           x: Math.min(points[1].x, points[4].x),
@@ -110,8 +123,16 @@ export default function CubismPrompt({
         duration: 0.5,
         ease: 'power2.out',
       });
-      gsap.to('.brown-left', { attr: { d: brownLeftPath(points) }, duration: 0.5, ease: 'power2.out' });
-      gsap.to('.brown-bottom', { attr: { d: brownBottomPath() }, duration: 0.5, ease: 'power2.out' });
+      gsap.to('.brown-left', {
+        attr: { d: brownLeftPath(points) },
+        duration: 0.5,
+        ease: 'power2.out',
+      });
+      gsap.to('.brown-bottom', {
+        attr: { d: brownBottomPath() },
+        duration: 0.5,
+        ease: 'power2.out',
+      });
     }
     container.addEventListener('mousemove', onMouseMove);
     container.addEventListener('mouseleave', onMouseLeave);
@@ -119,19 +140,13 @@ export default function CubismPrompt({
       container.removeEventListener('mousemove', onMouseMove);
       container.removeEventListener('mouseleave', onMouseLeave);
     };
-  }, []);
+  }, [sharedPoints, trianglePath, brownLeftPath]);
 
   useEffect(() => {
     if (!svgRef.current || !containerRef.current) return;
     const container = containerRef.current;
     // Only fade in, no scale or hover morphs
-    gsap.set([
-      '.orange-bg', 
-      '.orange-triangle', 
-      '.brown-left', 
-      '.brown-bottom', 
-      '.text',
-    ], {
+    gsap.set(['.orange-bg', '.orange-triangle', '.brown-left', '.brown-bottom', '.text'], {
       opacity: 0,
     });
     const tl = gsap.timeline({
@@ -139,35 +154,51 @@ export default function CubismPrompt({
         trigger: container,
         start: 'top 80%',
         toggleActions: 'play none none reverse',
-      }
+      },
     });
     tl.to('.orange-triangle', {
       opacity: 1,
       duration: 0.8,
       ease: 'power2.out',
     })
-    .to('.orange-bg', {
-      opacity: 1,
-      duration: 0.6,
-      ease: 'power2.out',
-    }, '-=0.4')
-    .to('.brown-left', {
-      opacity: 1,
-      duration: 0.5,
-      ease: 'power2.out',
-    }, '-=0.3')
-    .to('.brown-bottom', {
-      opacity: 1,
-      duration: 0.5,
-      ease: 'power2.out',
-    }, '-=0.3')
-    .to('.text', {
-      opacity: 1,
-      duration: 0.7,
-      ease: 'power2.out',
-    }, '-=0.2');
+      .to(
+        '.orange-bg',
+        {
+          opacity: 1,
+          duration: 0.6,
+          ease: 'power2.out',
+        },
+        '-=0.4'
+      )
+      .to(
+        '.brown-left',
+        {
+          opacity: 1,
+          duration: 0.5,
+          ease: 'power2.out',
+        },
+        '-=0.3'
+      )
+      .to(
+        '.brown-bottom',
+        {
+          opacity: 1,
+          duration: 0.5,
+          ease: 'power2.out',
+        },
+        '-=0.3'
+      )
+      .to(
+        '.text',
+        {
+          opacity: 1,
+          duration: 0.7,
+          ease: 'power2.out',
+        },
+        '-=0.2'
+      );
     return () => {
-      ScrollTrigger.getAll().forEach(trigger => trigger.kill());
+      ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
     };
   }, []);
 
@@ -201,11 +232,7 @@ export default function CubismPrompt({
         className={styles.animatedSvg}
       >
         {/* Brown left triangle beneath orange shapes */}
-        <path
-          className="brown-left"
-          d={brownLeftPath(sharedPoints)}
-          fill="#BF471E"
-        />
+        <path className="brown-left" d={brownLeftPath(sharedPoints)} fill="#BF471E" />
         {/* Orange rectangle */}
         <rect
           className="orange-bg"
@@ -216,17 +243,9 @@ export default function CubismPrompt({
           fill="#E15728"
         />
         {/* Orange triangle */}
-        <path
-          className="orange-triangle"
-          d={trianglePath(sharedPoints)}
-          fill="#F56331"
-        />
+        <path className="orange-triangle" d={trianglePath(sharedPoints)} fill="#F56331" />
         {/* Brown bottom triangle, visually separated */}
-        <path
-          className="brown-bottom"
-          d={brownBottomPath()}
-          fill="#BF471E"
-        />
+        <path className="brown-bottom" d={brownBottomPath()} fill="#BF471E" />
         {/* Primary text centered on orange background */}
         <text
           x="0"
@@ -239,11 +258,7 @@ export default function CubismPrompt({
           fontWeight="500"
         >
           {wrapSvgText(text, 20).map((line, i) => (
-            <tspan
-              key={i}
-              x="200"
-              dy={i === 0 ? 0 : 32}
-            >
+            <tspan key={i} x="200" dy={i === 0 ? 0 : 32}>
               {line}
             </tspan>
           ))}
