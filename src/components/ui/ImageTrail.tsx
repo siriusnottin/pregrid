@@ -1,8 +1,9 @@
 'use client';
 
-import React, { useEffect, useRef, useState, useCallback, useMemo } from 'react';
+import React, { useEffect, useRef, useState, useCallback } from 'react';
 import { gsap } from 'gsap';
 import { useMenu } from '@/context/MenuContext';
+import Image from 'next/image';
 import styles from './ImageTrail.module.css';
 
 interface MousePosition {
@@ -54,13 +55,19 @@ const ImageTrail: React.FC<ImageTrailProps> = ({ images, threshold = 100, classN
 
   const [imagesLoaded, setImagesLoaded] = useState(false);
 
-  const shuffledImages = useMemo(() => shuffleArray(images), [images]);
+  // State for shuffled images (to avoid SSR/client mismatch)
+  const [shuffledImages, setShuffledImages] = useState<string[]>([]);
+
+  // Shuffle images only on client
+  useEffect(() => {
+    setShuffledImages(shuffleArray(images));
+  }, [images]);
 
   // Preload images
   const preloadImages = useCallback(() => {
     let loaded = 0;
     shuffledImages.forEach((src) => {
-      const img = new Image();
+      const img = new window.Image();
       img.onload = () => {
         loaded++;
         if (loaded === shuffledImages.length) {
@@ -238,9 +245,10 @@ const ImageTrail: React.FC<ImageTrailProps> = ({ images, threshold = 100, classN
 
   // Initialize image refs and preload images
   useEffect(() => {
-    // Start preloading images
-    preloadImages();
-  }, [preloadImages]);
+    if (shuffledImages.length > 0) {
+      preloadImages();
+    }
+  }, [shuffledImages, preloadImages]);
 
   // Initialize image refs after images are loaded
   useEffect(() => {
@@ -310,12 +318,15 @@ const ImageTrail: React.FC<ImageTrailProps> = ({ images, threshold = 100, classN
   return (
     <div ref={containerRef} className={`${styles.imageTrail} ${className}`}>
       {shuffledImages.map((src, index) => (
-        <img
+        <Image
           key={index}
           src={src}
           alt={`Trail image ${index + 1}`}
           className={styles.trailImage}
           style={{ display: imagesLoaded ? 'block' : 'none' }}
+          width={400} // Set a default width, adjust as needed
+          height={300} // Set a default height, adjust as needed
+          priority={index === 0}
         />
       ))}
     </div>
