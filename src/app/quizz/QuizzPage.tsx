@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import WelcomeBanner from './quiz-svgs/WelcomeBanner';
-import CubismPrompt from './CubismPrompt'; // Adjust the import path if needed
+import WelcomeBanner from './components/quiz-svgs/WelcomeBanner';
+import CubismPrompt from './components/quiz-svgs/CubismPrompt';
 
 export default function QuizzPage() {
   const [showPrompt, setShowPrompt] = useState(false);
