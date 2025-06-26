@@ -6,11 +6,12 @@ import { useRef } from 'react';
 import MenuToggle from './MenuToggle';
 import SvgMenu from './SvgMenu';
 import styles from './Menu.module.css';
+import type { SVGMenuHandle } from './SvgMenu';
 
 export default function Menu() {
   const { isMenuOpen, setIsMenuOpen, triggerPageExitAndNavigate } = useMenu();
   const router = useRouter();
-  const svgMenuRef = useRef<any>(null);
+  const svgMenuRef = useRef<SVGMenuHandle | null>(null);
 
   const handleMenuToggle = async () => {
     if (isMenuOpen && svgMenuRef.current && svgMenuRef.current.animateExit) {

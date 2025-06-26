@@ -61,11 +61,18 @@ const menuItems = [
   },
 ];
 
+export interface SVGMenuHandle {
+  animateExit: () => Promise<void>;
+}
+
 interface SvgMenuProps {
   onSelect?: (id: string) => void;
 }
 
-const SvgMenu = forwardRef(function SvgMenu({ onSelect }: SvgMenuProps, ref) {
+const SvgMenu = forwardRef<SVGMenuHandle, SvgMenuProps>(function SvgMenu(
+  { onSelect }: SvgMenuProps,
+  ref
+) {
   const pathsRef = useRef<(SVGPathElement | null)[]>([]);
   const centerCircleRef = useRef<SVGCircleElement>(null);
   const textRefs = useRef<(SVGTextElement | null)[]>([]);
