@@ -2,7 +2,6 @@
 
 import { useRef, useEffect } from 'react';
 import { gsap } from 'gsap';
-import styles from './EventCard.module.css';
 
 // Color constants
 const COLORS = {

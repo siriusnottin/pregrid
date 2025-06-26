@@ -44,7 +44,7 @@ export default function EventsPage() {
       </Heading>
       <div className={`${styles.eventsList} ${gridStyles.grid}`}>
         {events.map((event) => (
-          <EventCard key={event.id} event={event} className={styles.eventCard} />
+          <EventCard key={event.id} event={event} />
         ))}
       </div>
     </>
